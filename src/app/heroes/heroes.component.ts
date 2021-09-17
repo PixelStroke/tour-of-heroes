@@ -23,11 +23,10 @@ export class HeroesComponent implements OnInit {
 
   constructor(private _heroService: HeroService) { }
 
+  // Subscribe to observable
   getHeroes(): void {
-    // This only works because the mock data is always available.
-    // In an asynchronous environment we need to wait for a response.
-    //
-    this.heroes = this._heroService.getHeroes();
+    this._heroService.getHeroes()
+      .subscribe(heroes => this.heroes = heroes);
   }
 
   selectedHero?: Hero;
