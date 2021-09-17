@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Hero } from '../hero';
-import { HEROES } from '../mock-heroes';
+import { HeroService } from '../hero.service';
 
 // Always annotate Component symbol with '@'
 // The @Component decorator function specifies Angular metadata.
@@ -17,10 +17,18 @@ export class HeroesComponent implements OnInit {
     id: 1,
     name: 'Michael Scott'
   }
-  // Mock data
-  heroes = HEROES;
+  // Property decleration
+  //
+  heroes: Hero[] = [];
 
-  constructor() { }
+  constructor(private _heroService: HeroService) { }
+
+  getHeroes(): void {
+    // This only works because the mock data is always available.
+    // In an asynchronous environment we need to wait for a response.
+    //
+    this.heroes = this._heroService.getHeroes();
+  }
 
   selectedHero?: Hero;
   onSelect(hero: Hero): void {
@@ -28,6 +36,7 @@ export class HeroesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getHeroes();
   }
 
 }
